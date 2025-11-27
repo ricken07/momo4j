@@ -8,7 +8,7 @@
 
   <groupId>com.rickenbazolo</groupId>
   <artifactId>momo4j-parent</artifactId>
-  <version>${revision}</version>
+  <version>0.0.3</version>
   <packaging>pom</packaging>
 
   <name>momo4j</name>
@@ -73,12 +73,12 @@
       <dependency>
         <groupId>com.rickenbazolo</groupId>
         <artifactId>momo4j-core</artifactId>
-        <version>${revision}</version>
+        <version>0.0.3</version>
       </dependency>
       <dependency>
         <groupId>com.rickenbazolo</groupId>
         <artifactId>momo4j-http-client</artifactId>
-        <version>${revision}</version>
+        <version>0.0.3</version>
       </dependency>
 
       <!-- Jackson -->
