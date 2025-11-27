@@ -3,11 +3,12 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
          http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.rickenbazolo</groupId>
   <artifactId>momo4j-parent</artifactId>
-  <version>0.0.1</version>
+  <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>momo4j</name>
@@ -36,24 +37,13 @@
     <url>https://github.com/ricken07/momo4j/tree/main</url>
   </scm>
 
-  <distributionManagement>
-    <repository>
-      <id>central</id>
-      <url>https://central.sonatype.com/</url>
-    </repository>
-  </distributionManagement>
+  <!-- ⚠️ distributionManagement SUPPRIMÉ -->
+  <!-- plus de <distributionManagement> ici -->
 
   <modules>
-    <!-- BOM for dependency management -->
     <module>momo4j-bom</module>
-
-    <!-- Core modules -->
     <module>momo4j-core</module>
-
-    <!-- HTTP Client implementations -->
     <module>momo4j-http-client</module>
-
-    <!-- Mobile Money Operator modules -->
     <module>momo4j-mtn-congo</module>
     <module>momo4j-airtel-congo</module>
   </modules>
@@ -78,27 +68,24 @@
     <maven-source-plugin.version>3.3.1</maven-source-plugin.version>
     <maven-javadoc-plugin.version>3.6.3</maven-javadoc-plugin.version>
     <maven-gpg-plugin.version>3.2.4</maven-gpg-plugin.version>
-    <maven-deploy-plugin.version>3.1.2</maven-deploy-plugin.version>
     <flatten-maven-plugin.version>1.6.0</flatten-maven-plugin.version>
-    <central-publishing-maven-plugin.version>0.6.0</central-publishing-maven-plugin.version>
+    <central-publishing-maven-plugin.version>0.9.0</central-publishing-maven-plugin.version>
   </properties>
 
   <dependencyManagement>
     <dependencies>
-      <!-- momo4j dependency -->
       <dependency>
         <groupId>com.rickenbazolo</groupId>
         <artifactId>momo4j-core</artifactId>
-        <version>${version}</version>
+        <version>${revision}</version>
       </dependency>
-
       <dependency>
         <groupId>com.rickenbazolo</groupId>
         <artifactId>momo4j-http-client</artifactId>
-        <version>${version}</version>
+        <version>${revision}</version>
       </dependency>
 
-      <!-- Jackson for JSON processing -->
+      <!-- Jackson -->
       <dependency>
         <groupId>com.fasterxml.jackson.core</groupId>
         <artifactId>jackson-databind</artifactId>
@@ -121,36 +108,22 @@
         <version>${slf4j.version}</version>
       </dependency>
 
-      <!-- YAML Processing (optional) -->
       <dependency>
         <groupId>org.yaml</groupId>
         <artifactId>snakeyaml</artifactId>
         <version>${snakeyaml.version}</version>
       </dependency>
 
-      <!-- OkHttp (optional) -->
       <dependency>
         <groupId>com.squareup.okhttp3</groupId>
         <artifactId>okhttp</artifactId>
         <version>${okhttp.version}</version>
       </dependency>
 
-      <!-- Testing dependencies -->
+      <!-- Tests -->
       <dependency>
         <groupId>org.junit.jupiter</groupId>
         <artifactId>junit-jupiter</artifactId>
-        <version>${junit.version}</version>
-        <scope>test</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.junit.jupiter</groupId>
-        <artifactId>junit-jupiter-api</artifactId>
-        <version>${junit.version}</version>
-        <scope>test</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.junit.jupiter</groupId>
-        <artifactId>junit-jupiter-engine</artifactId>
         <version>${junit.version}</version>
         <scope>test</scope>
       </dependency>
@@ -205,38 +178,12 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-source-plugin</artifactId>
           <version>${maven-source-plugin.version}</version>
-          <executions>
-            <execution>
-              <id>attach-sources</id>
-              <goals>
-                <goal>jar-no-fork</goal>
-              </goals>
-            </execution>
-          </executions>
         </plugin>
 
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-javadoc-plugin</artifactId>
           <version>${maven-javadoc-plugin.version}</version>
-          <executions>
-            <execution>
-              <id>attach-javadocs</id>
-              <goals>
-                <goal>jar</goal>
-              </goals>
-            </execution>
-          </executions>
-          <configuration>
-            <doclint>none</doclint>
-            <source>17</source>
-          </configuration>
-        </plugin>
-
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-deploy-plugin</artifactId>
-          <version>${maven-deploy-plugin.version}</version>
         </plugin>
 
         <plugin>
@@ -244,23 +191,11 @@
           <artifactId>flatten-maven-plugin</artifactId>
           <version>${flatten-maven-plugin.version}</version>
         </plugin>
-
-        <plugin>
-          <groupId>org.sonatype.central</groupId>
-          <artifactId>central-publishing-maven-plugin</artifactId>
-          <version>${central-publishing-maven-plugin.version}</version>
-          <extensions>true</extensions>
-          <configuration>
-            <publishingServerId>central</publishingServerId>
-            <autoPublish>true</autoPublish>
-            <waitUntil>published</waitUntil>
-          </configuration>
-        </plugin>
       </plugins>
     </pluginManagement>
 
     <plugins>
-      <!-- Flatten POM for proper version resolution -->
+      <!-- Flatten POM -->
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>flatten-maven-plugin</artifactId>
@@ -286,10 +221,14 @@
       </plugin>
 
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-deploy-plugin</artifactId>
+        <groupId>org.sonatype.central</groupId>
+        <artifactId>central-publishing-maven-plugin</artifactId>
+        <version>${central-publishing-maven-plugin.version}</version>
+        <extensions>true</extensions>
         <configuration>
-          <skip>true</skip>
+          <publishingServerId>central</publishingServerId>
+          <autoPublish>true</autoPublish>
+          <waitUntil>published</waitUntil>
         </configuration>
       </plugin>
 
@@ -306,6 +245,20 @@
           </execution>
         </executions>
       </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals>
+              <goal>jar-no-fork</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
     </plugins>
   </build>
 
