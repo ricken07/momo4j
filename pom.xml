@@ -42,7 +42,6 @@
     <module>momo4j-core</module>
     <module>momo4j-http-client</module>
     <module>momo4j-mtn-congo</module>
-    <module>momo4j-airtel-congo</module>
   </modules>
 
   <properties>
